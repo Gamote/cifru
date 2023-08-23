@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
-    "dev": "ts-node-dev",
+    "dev": "ts-node-dev --respawn --transpile-only --no-notify src/dev.ts",
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },

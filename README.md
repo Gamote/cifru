@@ -14,7 +14,10 @@ yarn add cifru
 ## Usage
 
 ```ts
-import { cifru } from 'cifru';
+import { qb } from 'cifru';
+
+qb.match().node('u').label('user').return().query();
+// => "MATCH (u:user) RETURN"
 ```
 
 ## Testing
