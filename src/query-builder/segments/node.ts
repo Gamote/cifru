@@ -5,16 +5,10 @@ import type { Query } from '../abstracts/query';
 /**
  * Node
  */
-export class Node extends Pattern<Node> {
-  private readonly _name: string | undefined;
-  private readonly _labels: string[] = [];
-
+export class Node extends Pattern {
   // TODO: we should have a type that can prefix a `Pattern`
   public constructor(query?: Query, name?: string, labels?: string[]) {
-    super(query);
-
-    this._name = name;
-    this._labels = labels ?? [];
+    super(query, name, labels);
   }
 
   public clone(): Node {
@@ -27,16 +21,13 @@ export class Node extends Pattern<Node> {
     return `(${name}${labels})`;
   }
 
-  public label(label: string): Node {
-    const next = this.clone();
-    next._labels.push(label);
-    return next;
-  }
-
-  // TODO: combine with label
-  public labels(labels: string[]): Node {
+  public labels(...labels: string[]): Node {
     const next = this.clone();
     next._labels.push(...labels);
     return next;
+  }
+
+  public label(label: string): Node {
+    return this.labels(label);
   }
 }

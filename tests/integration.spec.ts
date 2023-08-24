@@ -30,17 +30,17 @@ describe('Integration tests', () => {
   });
 
   it('MATCH (u:user|group|post)', () => {
-    expect(
-      qb.match(qb.node('u').labels(['user', 'group', 'post'])).query(),
-    ).toBe('MATCH (u:user|group|post)');
+    expect(qb.match(qb.node('u').labels('user', 'group', 'post')).query()).toBe(
+      'MATCH (u:user|group|post)',
+    );
   });
 
   it('After cloning: (u:like|comment|image)', () => {
     const userNode = qb.node('u');
     userNode.label('user');
-    userNode.labels(['group']);
+    userNode.labels('group', 'post');
 
-    const finalPattern = userNode.labels(['like', 'comment', 'image']);
+    const finalPattern = userNode.labels('like', 'comment', 'image');
 
     expect(finalPattern.generate()).toBe('(u:like|comment|image)');
   });
