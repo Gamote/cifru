@@ -1,21 +1,24 @@
 import { Pattern } from '../abstracts/pattern';
 
-import type { Query } from '../abstracts/query';
+import type { Element } from '../abstracts/element';
 
 /**
  * Node
  */
 export class Node extends Pattern {
-  // TODO: we should have a type that can prefix a `Pattern`
-  public constructor(query?: Query, name?: string, labels?: string[]) {
-    super(query, name, labels);
+  public constructor(
+    priorElement?: Element<Pattern>,
+    name?: string,
+    labels?: string[],
+  ) {
+    super(priorElement, name, labels);
   }
 
   public clone(): Node {
-    return new Node(this, this._name, [...this._labels]);
+    return new Node(this.priorElement, this._name, [...this._labels]);
   }
 
-  public generate(): string {
+  public toQuery(): string {
     const name = this._name ? this._name : '';
     const labels = this._labels.length ? `:${this._labels.join('|')}` : '';
     return `(${name}${labels})`;

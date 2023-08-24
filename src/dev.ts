@@ -14,7 +14,9 @@ const dev = () => {
   // ...
 
   // qb.match(qb.match(qb.node())); // should fail
-  qb.match(qb.node().labels('Test', 'Best')); // should work
+  const output = qb.match(qb.node('u').labels('Test', 'Best')); // should work
+
+  console.log(output.toQuery());
 };
 
 void dev();

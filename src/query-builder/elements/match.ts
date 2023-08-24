@@ -16,8 +16,8 @@ export class Match<P extends Pattern> extends Clause {
     return new Match<P>(this.pattern);
   }
 
-  public generate(): string {
-    return `MATCH ${this.pattern.generate()}`;
+  public toQuery(): string {
+    return `MATCH ${this.pattern.toQuery()}`;
   }
 
   public optional(): OptionalMatch<P> {

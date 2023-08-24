@@ -1,5 +1,5 @@
-import { Match } from './segments/match';
-import { Node } from './segments/node';
+import { Match } from './elements/match';
+import { Node } from './elements/node';
 
 import type { Pattern } from './abstracts/pattern';
 

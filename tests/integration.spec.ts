@@ -42,7 +42,7 @@ describe('Integration tests', () => {
 
     const finalPattern = userNode.labels('Like', 'Comment', 'Image');
 
-    expect(finalPattern.generate()).toBe('(u:Like|Comment|Image)');
+    expect(finalPattern.query()).toBe('(u:Like|Comment|Image)');
   });
 
   it('MATCH (u:User) RETURN', () => {
