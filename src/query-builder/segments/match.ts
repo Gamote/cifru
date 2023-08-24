@@ -1,28 +1,26 @@
-import { QueryStartSegment } from '../abstracts/query-start-segment';
+import { Clause } from '../abstracts/clause';
 
-import { Node } from './node';
+import { OptionalMatch } from './optional-match';
 
-export type MatchOptions = {
-  optional?: boolean;
-};
+import type { Pattern } from '../abstracts/pattern';
 
 /**
- * Match segment
+ * Match clause
  */
-export class Match extends QueryStartSegment {
-  public constructor(private readonly options?: MatchOptions) {
+export class Match<P extends Pattern> extends Clause {
+  public constructor(private readonly pattern: P) {
     super();
   }
 
-  protected clone(): Match {
-    return new Match(this.options);
+  public clone(): Match<P> {
+    return new Match<P>(this.pattern);
   }
 
   public generate(): string {
-    return `${this.options?.optional ? 'OPTIONAL ' : ''}MATCH`;
+    return `MATCH ${this.pattern.generate()}`;
   }
 
-  public node(name?: string): Node {
-    return new Node(this.commit(), name);
+  public optional(): OptionalMatch<P> {
+    return new OptionalMatch<P>(this);
   }
 }

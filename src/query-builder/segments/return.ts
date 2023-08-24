@@ -1,24 +1,16 @@
-import { QueryEndSegment } from '../abstracts/query-end-segment';
-
-import type { QueryBaseSegment } from '../abstracts/query-base-segment';
-
-export type ReturnOptions = {
-  // ...
-};
+import { Query } from '../abstracts/query';
 
 /**
- * Return segment
+ * Return
  */
-export class Return extends QueryEndSegment {
-  public constructor(
-    readonly parentSegment: QueryBaseSegment,
-    private readonly options?: ReturnOptions,
-  ) {
-    super(parentSegment);
+export class Return extends Query<Return> {
+  // TODO: We should have a type that is returnable
+  public constructor(query: Query) {
+    super(query);
   }
 
-  protected clone(): Return {
-    return new Return(this, this.options);
+  public clone(): Return {
+    return new Return(this);
   }
 
   public generate(): string {

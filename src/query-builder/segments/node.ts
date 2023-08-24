@@ -1,46 +1,42 @@
-import { QueryBaseSegment } from '../abstracts/query-base-segment';
+import { Pattern } from '../abstracts/pattern';
 
-import { Return } from './return';
+import type { Query } from '../abstracts/query';
 
 /**
  * Node
  */
-export class Node extends QueryBaseSegment {
+export class Node extends Pattern<Node> {
   private readonly _name: string | undefined;
   private readonly _labels: string[] = [];
 
-  public constructor(
-    readonly parentSegment: QueryBaseSegment,
-    readonly name?: string,
-  ) {
-    super(parentSegment);
+  // TODO: we should have a type that can prefix a `Pattern`
+  public constructor(query?: Query, name?: string, labels?: string[]) {
+    super(query);
 
     this._name = name;
+    this._labels = labels ?? [];
   }
 
-  protected clone(): Node {
-    return new Node(this, this._name);
+  public clone(): Node {
+    return new Node(this, this._name, [...this._labels]);
   }
 
   public generate(): string {
     const name = this._name ? this._name : '';
     const labels = this._labels.length ? `:${this._labels.join('|')}` : '';
-    return ` (${name}${labels})`;
+    return `(${name}${labels})`;
   }
 
-  public label(name: string): Node {
+  public label(label: string): Node {
     const next = this.clone();
-    next._labels.push(name);
+    next._labels.push(label);
     return next;
   }
 
-  public labels(names: string[]): Node {
+  // TODO: combine with label
+  public labels(labels: string[]): Node {
     const next = this.clone();
-    next._labels.push(...names);
+    next._labels.push(...labels);
     return next;
-  }
-
-  public return(): Return {
-    return new Return(this.commit());
   }
 }
