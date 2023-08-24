@@ -5,6 +5,8 @@
 
 **Cifru** (🗣 `[ˈt͡ʃifru]`): Cypher with no strings attached! Dive into our lightweight ORM that makes writing production-ready queries feel like a breeze.
 
+- **Name Validation at Compile Time**: Uses TypeScript template literals to validate node and relation names, ensuring correct format before runtime.
+
 ## Installation
 
 ```bash
