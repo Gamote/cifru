@@ -1,20 +1,24 @@
 import { Pattern } from '../abstracts/pattern';
 
 import type { Element } from '../abstracts/element';
+import type { ValidPatternName } from '../abstracts/pattern';
+import type { Optional } from '../type-utils';
 
 /**
  * Node
  */
-export class Node extends Pattern {
+export class Node<
+  Name extends Optional<ValidPatternName> = Optional<ValidPatternName>,
+> extends Pattern<Name> {
   public constructor(
-    priorElement?: Element<Pattern>,
-    name?: string,
+    priorElement?: Element<Pattern<Name>> | undefined,
+    name?: Name,
     labels?: string[],
   ) {
     super(priorElement, name, labels);
   }
 
-  public clone(): Node {
+  public clone(): Node<Name> {
     return new Node(this.priorElement, this._name, [...this._labels]);
   }
 
@@ -24,13 +28,13 @@ export class Node extends Pattern {
     return `(${name}${labels})`;
   }
 
-  public labels(...labels: string[]): Node {
+  public labels(...labels: string[]): Node<Name> {
     const next = this.clone();
     next._labels.push(...labels);
     return next;
   }
 
-  public label(label: string): Node {
+  public label(label: string): Node<Name> {
     return this.labels(label);
   }
 }

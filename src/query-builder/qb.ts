@@ -1,7 +1,8 @@
 import { Match } from './elements/match';
 import { Node } from './elements/node';
 
-import type { Pattern } from './abstracts/pattern';
+import type { ValidPatternName, Pattern } from './abstracts/pattern';
+import type { Optional } from './type-utils';
 
 /**
  * Starting point for the Cifru Query Builder
@@ -9,5 +10,6 @@ import type { Pattern } from './abstracts/pattern';
  */
 export const qb = {
   match: <P extends Pattern>(pattern: P) => new Match<P>(pattern),
-  node: (name?: string): Node => new Node(undefined, name),
+  node: <N extends Optional<ValidPatternName> = undefined>(name?: N) =>
+    new Node(undefined, name),
 };
