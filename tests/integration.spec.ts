@@ -15,39 +15,39 @@ describe('Integration tests', () => {
     expect(qb.match(qb.node('u')).query()).toBe('MATCH (u)');
   });
 
-  it('MATCH (:user)', () => {
-    expect(qb.match(qb.node().label('user')).query()).toBe('MATCH (:user)');
+  it('MATCH (:User)', () => {
+    expect(qb.match(qb.node().label('User')).query()).toBe('MATCH (:User)');
   });
 
-  it('MATCH (u:user)', () => {
-    expect(qb.match(qb.node('u').label('user')).query()).toBe('MATCH (u:user)');
+  it('MATCH (u:User)', () => {
+    expect(qb.match(qb.node('u').label('User')).query()).toBe('MATCH (u:User)');
   });
 
-  it('MATCH (u:user|admin)', () => {
-    expect(qb.match(qb.node('u').label('user').label('admin')).query()).toBe(
-      'MATCH (u:user|admin)',
+  it('MATCH (u:Provider|Client)', () => {
+    expect(
+      qb.match(qb.node('u').label('Provider').label('Client')).query(),
+    ).toBe('MATCH (u:Provider|Client)');
+  });
+
+  it('MATCH (u:User|Group|Post)', () => {
+    expect(qb.match(qb.node('u').labels('User', 'Group', 'Post')).query()).toBe(
+      'MATCH (u:User|Group|Post)',
     );
   });
 
-  it('MATCH (u:user|group|post)', () => {
-    expect(qb.match(qb.node('u').labels('user', 'group', 'post')).query()).toBe(
-      'MATCH (u:user|group|post)',
-    );
-  });
-
-  it('After cloning: (u:like|comment|image)', () => {
+  it('After cloning: (u:Like|Comment|Image)', () => {
     const userNode = qb.node('u');
     userNode.label('user');
     userNode.labels('group', 'post');
 
-    const finalPattern = userNode.labels('like', 'comment', 'image');
+    const finalPattern = userNode.labels('Like', 'Comment', 'Image');
 
-    expect(finalPattern.generate()).toBe('(u:like|comment|image)');
+    expect(finalPattern.generate()).toBe('(u:Like|Comment|Image)');
   });
 
-  it('MATCH (u:user) RETURN', () => {
-    expect(qb.match(qb.node('u').label('user')).return().query()).toBe(
-      'MATCH (u:user) RETURN',
+  it('MATCH (u:User) RETURN', () => {
+    expect(qb.match(qb.node('u').label('User')).return().query()).toBe(
+      'MATCH (u:User) RETURN',
     );
   });
 });
