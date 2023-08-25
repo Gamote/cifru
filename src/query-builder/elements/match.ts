@@ -15,10 +15,6 @@ export class Match<P extends Pattern> extends Clause<P['name']> {
     super();
   }
 
-  public clone(): Match<P> {
-    return new Match<P>(this.pattern);
-  }
-
   public toQuery(): string {
     return `MATCH ${this.pattern.toQuery()}`;
   }

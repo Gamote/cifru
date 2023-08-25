@@ -10,15 +10,11 @@ import type { Optional } from '../type-utils';
 export class Node<
   Name extends Optional<ValidPatternName> = Optional<ValidPatternName>,
 > extends Pattern<Name> {
-  public constructor(
-    priorElement?: Element<Pattern<Name>> | undefined,
-    name?: Name,
-    labels?: string[],
-  ) {
+  public constructor(priorElement?: Element, name?: Name, labels?: string[]) {
     super(priorElement, name, labels);
   }
 
-  public clone(): Node<Name> {
+  public clone() {
     return new Node(this.priorElement, this.name, [...this.labelList]);
   }
 

@@ -1,5 +1,6 @@
-import { Element } from './element';
+import { CloneableElement } from './element';
 
+import type { Element } from './element';
 import type { Alphabet, Optional } from '../type-utils';
 
 export type ValidPatternName = `${
@@ -11,12 +12,12 @@ export type ValidPatternName = `${
  */
 export abstract class Pattern<
   Name extends Optional<ValidPatternName> = Optional<ValidPatternName>,
-> extends Element<Pattern<Name>> {
+> extends CloneableElement<Pattern<Name>> {
   public readonly name: Name;
   public readonly labelList: string[];
 
   protected constructor(
-    priorElement?: Element<Pattern<Name>> | undefined,
+    priorElement?: Element | undefined,
     name?: Name,
     labels?: string[],
   ) {

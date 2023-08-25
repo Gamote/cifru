@@ -1,21 +1,15 @@
 import { Element } from '../abstracts/element';
 
-import type { Pattern } from '../abstracts/pattern';
-
 /**
  * Return
  */
-export class Return<ReturnProps extends string> extends Element<ReturnProps> {
+export class Return<ReturnProps extends string> extends Element {
   // TODO: We should accept only a type that is "Returnable"
   public constructor(
-    priorElement: Element<Pattern>,
+    priorElement: Element,
     private readonly props: ReturnProps,
   ) {
     super(priorElement);
-  }
-
-  public clone(): Return<ReturnProps> {
-    return new Return<ReturnProps>(this, this.props);
   }
 
   public toQuery(): string {
