@@ -27,7 +27,7 @@ export abstract class Pattern<
   public readonly labelList: string[];
 
   protected constructor(
-    priorElement?: Element | undefined,
+    priorElement?: Element,
     name?: Name,
     labels?: string[],
   ) {
