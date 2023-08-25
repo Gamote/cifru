@@ -15,6 +15,17 @@ export class Match<P extends Pattern> extends Clause<P['name']> {
     super();
   }
 
+  /**
+   * Type-safe way to create a `Match` instance.
+   *
+   * TODO: Should we enforce it through the Element abstract class?
+   *
+   * @param pattern
+   */
+  static create<P extends Pattern>(pattern: P) {
+    return new Match<P>(pattern);
+  }
+
   public toQuery(): string {
     return `MATCH ${this.pattern.toQuery()}`;
   }

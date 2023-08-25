@@ -7,11 +7,23 @@ import type { Optional } from '../type-utils';
 /**
  * Node
  */
-export class Node<
-  Name extends Optional<ValidPatternName> = Optional<ValidPatternName>,
-> extends Pattern<Node<Name>, Name> {
+export class Node<Name extends Optional<ValidPatternName>> extends Pattern<
+  Node<Name>,
+  Name
+> {
   public constructor(priorElement?: Element, name?: Name, labels?: string[]) {
     super(priorElement, name, labels);
+  }
+
+  /**
+   * Type-safe way to create a `Node` instance.
+   *
+   * TODO: Should we enforce it through the Element abstract class?
+   *
+   * @param name
+   */
+  static create<Name extends Optional<ValidPatternName>>(name?: Name) {
+    return new Node<Name>(undefined, name);
   }
 
   public clone() {
