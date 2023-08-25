@@ -9,7 +9,7 @@ import type { Optional } from '../type-utils';
  */
 export class Node<
   Name extends Optional<ValidPatternName> = Optional<ValidPatternName>,
-> extends Pattern<Name> {
+> extends Pattern<Node<Name>, Name> {
   public constructor(priorElement?: Element, name?: Name, labels?: string[]) {
     super(priorElement, name, labels);
   }
@@ -22,15 +22,5 @@ export class Node<
     const name = this.name ? this.name : '';
     const labels = this.labelList.length ? `:${this.labelList.join('|')}` : '';
     return `(${name}${labels})`;
-  }
-
-  public labels(...labels: string[]): Node<Name> {
-    const next = this.clone();
-    next.labelList.push(...labels);
-    return next;
-  }
-
-  public label(label: string): Node<Name> {
-    return this.labels(label);
   }
 }
