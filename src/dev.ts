@@ -3,6 +3,7 @@
 //  Basically, should we go into the full ORM arena? Handling database connections, transactions, etc?
 //  Or should we just provide a simple query builder that can be used to build queries and then execute them?
 // TODO: create an error library that we can use to throw errors with custom codes and messages that are Google friendly
+// TODO: no duplicated Node names, or return statements and stuff like that
 
 import { qb } from './index';
 
@@ -13,10 +14,11 @@ const dev = () => {
 
   // ...
 
-  // qb.match(qb.match(qb.node())); // should fail
-  const output = qb.match(qb.node('u').labels('Test', 'Best')); // should work
+  const match = qb.match(qb.node('u').labels('Test', 'Best'));
 
-  console.log(output.toQuery());
+  const returnObj = match.return('u');
+
+  console.log(returnObj.query());
 };
 
 void dev();

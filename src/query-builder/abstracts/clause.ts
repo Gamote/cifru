@@ -2,17 +2,24 @@ import { Return } from '../elements/return';
 
 import { Element } from './element';
 
+import type { ValidPatternName } from './pattern';
+import type { Optional } from '../type-utils';
+
 /**
  * Clause
  */
-export abstract class Clause extends Element<Clause> {
-  // A clause cannot have an initial query as most of the time
+export abstract class Clause<
+  ReturnProps extends Optional<ValidPatternName>,
+> extends Element<Clause<ReturnProps>> {
+  // A clause cannot have a prior element as most of the time
   // the clause is the first element in the query
   protected constructor() {
     super();
   }
 
-  public return(): Return<Clause> {
-    return new Return<Clause>(this);
+  public return(
+    props: Exclude<ReturnProps, undefined>,
+  ): Return<Exclude<ReturnProps, undefined>> {
+    return new Return<Exclude<ReturnProps, undefined>>(this, props);
   }
 }

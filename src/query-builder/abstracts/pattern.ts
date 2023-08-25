@@ -12,8 +12,8 @@ export type ValidPatternName = `${
 export abstract class Pattern<
   Name extends Optional<ValidPatternName> = Optional<ValidPatternName>,
 > extends Element<Pattern<Name>> {
-  protected readonly _name: Name;
-  protected readonly _labels: string[] = [];
+  public readonly name: Name;
+  public readonly labelList: string[];
 
   protected constructor(
     priorElement?: Element<Pattern<Name>> | undefined,
@@ -30,7 +30,7 @@ export abstract class Pattern<
     // Using the type assertion `(undefined as Name)` here is a temporary workaround to
     // bypass the error.
     // TODO: Consider revisiting this with future TypeScript versions or design changes to avoid type casting.
-    this._name = name ?? (undefined as Name);
-    this._labels = labels ?? [];
+    this.name = name ?? (undefined as Name);
+    this.labelList = labels ?? [];
   }
 }

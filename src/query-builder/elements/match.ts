@@ -6,8 +6,11 @@ import type { Pattern } from '../abstracts/pattern';
 
 /**
  * Match clause
+ *
+ * TODO: maybe we can pass just the Pattern to the Clause generic and get the name there
+ *  so we don't have to repeat it for every clause extension
  */
-export class Match<P extends Pattern> extends Clause {
+export class Match<P extends Pattern> extends Clause<P['name']> {
   public constructor(private readonly pattern: P) {
     super();
   }

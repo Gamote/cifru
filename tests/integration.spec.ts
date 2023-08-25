@@ -45,9 +45,9 @@ describe('Integration tests', () => {
     expect(finalPattern.query()).toBe('(u:Like|Comment|Image)');
   });
 
-  it('MATCH (u:User) RETURN', () => {
-    expect(qb.match(qb.node('u').label('User')).return().query()).toBe(
-      'MATCH (u:User) RETURN',
+  it('MATCH (u:User) RETURN u', () => {
+    expect(qb.match(qb.node('u').label('User')).return('u').query()).toBe(
+      'MATCH (u:User) RETURN u',
     );
   });
 });

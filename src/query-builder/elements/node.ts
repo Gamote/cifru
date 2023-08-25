@@ -19,18 +19,18 @@ export class Node<
   }
 
   public clone(): Node<Name> {
-    return new Node(this.priorElement, this._name, [...this._labels]);
+    return new Node(this.priorElement, this.name, [...this.labelList]);
   }
 
   public toQuery(): string {
-    const name = this._name ? this._name : '';
-    const labels = this._labels.length ? `:${this._labels.join('|')}` : '';
+    const name = this.name ? this.name : '';
+    const labels = this.labelList.length ? `:${this.labelList.join('|')}` : '';
     return `(${name}${labels})`;
   }
 
   public labels(...labels: string[]): Node<Name> {
     const next = this.clone();
-    next._labels.push(...labels);
+    next.labelList.push(...labels);
     return next;
   }
 
