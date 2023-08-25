@@ -23,8 +23,11 @@ export abstract class Element {
    * Returns **ONLY** the cypher of the element is called on.
    *
    * If you want the full query, use `query()` instead.
+   *
+   * TODO: Should not be public! The user might confuse it with `query()`.
+   *  I've done it myself. 🤦
    */
-  public abstract toQuery(): string; // TODO: should not be public! as the user might confuse it with `query()`
+  public abstract toQuery(): string;
 }
 
 /**

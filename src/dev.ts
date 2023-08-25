@@ -5,20 +5,24 @@
 // TODO: create an error library that we can use to throw errors with custom codes and messages that are Google friendly
 // TODO: no duplicated Node names, or return statements and stuff like that
 
-import { qb } from './index';
+import c from './index';
 
 const dev = () => {
   console.log('==================================');
   console.log('==> PLAYGROUND <==================');
   console.log('==================================');
 
-  // ...
+  const query = c
+    .match(
+      c
+        .node('u')
+        .labels('Actor', 'Musician')
+        .props({ name: 'Cami', isActive: true, age: 30 }),
+    )
+    .return('u')
+    .query();
 
-  const match = qb.match(qb.node('u').labels('Test', 'Best'));
-
-  const returnObj = match.return('u');
-
-  console.log(returnObj.query());
+  console.log(query);
 };
 
 void dev();

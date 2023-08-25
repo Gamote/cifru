@@ -16,13 +16,15 @@ yarn add cifru
 ## Usage
 
 ```ts
-import { qb } from 'cifru';
+import c from 'cifru';
 
-qb.match(qb.node('u').label('User')).return('u').query();
-// => "MATCH (u:User) RETURN u"
+const query = c
+  .match(c.node('u').labels('Actor', 'Musician').props({ name: 'Cami' }))
+  .return('u')
+  .query();
 
-qb.match(qb.node('u').labels('Actor', 'Musican')).return('u').query();
-// => "MATCH (u:Actor|Musician) RETURN u"
+console.log(query);
+// => "MATCH (u:Actor|Musician {name: 'Cami'}) RETURN u"
 ```
 
 ## Testing

@@ -1,6 +1,5 @@
 import { Pattern } from '../abstracts/pattern';
 
-import type { Element } from '../abstracts/element';
 import type { ValidPatternName } from '../abstracts/pattern';
 import type { Optional } from '../type-utils';
 
@@ -11,10 +10,6 @@ export class Node<Name extends Optional<ValidPatternName>> extends Pattern<
   Node<Name>,
   Name
 > {
-  public constructor(priorElement?: Element, name?: Name, labels?: string[]) {
-    super(priorElement, name, labels);
-  }
-
   /**
    * Type-safe way to create a `Node` instance.
    *
@@ -27,12 +22,32 @@ export class Node<Name extends Optional<ValidPatternName>> extends Pattern<
   }
 
   public clone() {
-    return new Node(this.priorElement, this.name, [...this.labelList]);
+    return new Node(
+      this.priorElement,
+      this.name,
+      [...this.labelList],
+      // TODO: we should clone this too
+      this.properties ? { ...this.properties } : undefined,
+    );
   }
 
   public toQuery(): string {
     const name = this.name ? this.name : '';
     const labels = this.labelList.length ? `:${this.labelList.join('|')}` : '';
-    return `(${name}${labels})`;
+
+    // TODO: we should move this in a mini class utility to deal with
+    //  complex properties and to offer an easy way to clone the object
+    const proprieties = this.properties
+      ? ` {${Object.entries(this.properties)
+          .map(([key, value]) => {
+            const valueString =
+              typeof value === 'string' ? `'${value}'` : String(value);
+
+            return `${key}: ${valueString}`;
+          })
+          .join(', ')}}`
+      : '';
+
+    return `(${name}${labels}${proprieties})`;
   }
 }

@@ -25,16 +25,30 @@ export abstract class Pattern<
 > extends CloneableElement<Type> {
   public readonly name?: Name;
   public readonly labelList: string[];
+  // TODO: make this a type, also generic, check the restrictions on the value type and the keys should start with a letter
+  private _properties?: Record<string, string | number | boolean>;
 
   protected constructor(
     priorElement?: Element,
     name?: Name,
     labels?: string[],
+    properties?: Record<string, string | number | boolean>,
   ) {
     super(priorElement);
 
     this.name = name;
     this.labelList = labels ?? [];
+    this.properties = properties;
+  }
+
+  public get properties() {
+    return this._properties;
+  }
+
+  private set properties(
+    properties: Record<string, string | number | boolean> | undefined,
+  ) {
+    this._properties = properties;
   }
 
   public labels(...labels: string[]) {
@@ -45,5 +59,11 @@ export abstract class Pattern<
 
   public label(label: string) {
     return this.labels(label);
+  }
+
+  public props(props?: Record<string, string | number | boolean>) {
+    const next = this.clone();
+    next._properties = { ...props };
+    return next;
   }
 }
