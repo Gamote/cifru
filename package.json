@@ -1,6 +1,17 @@
 {
   "name": "cifru",
-  "version": "0.3.0-alpha.0",
+  "version": "0.3.1-alpha.0",
+  "description": "Cifru: cypher queries with no strings attached! 🌊",
+  "keywords": [
+    "orm",
+    "neo4j",
+    "cypher",
+    "query",
+    "query builder",
+    "query language",
+    "redis-graph",
+    "typescript"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "private": false,
