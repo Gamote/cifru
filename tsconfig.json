@@ -1,14 +1,11 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "declaration": true,
-    "target": "es2022",
-    "sourceMap": true,
-    "outDir": "./dist",
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "node",
+    "noEmit": true,
     "baseUrl": "./",
-    "incremental": true,
     "strict": true,
-    "removeComments": true,
-    "allowSyntheticDefaultImports": true
+    "removeComments": false
   }
 }
