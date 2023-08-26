@@ -23,10 +23,7 @@ export class OptionalMatch<PatternType extends Pattern> extends Clause<
    * TODO: Should we enforce it through the Element abstract class?
    */
   static factory<PatternType extends Pattern>(match: Match<PatternType>) {
-    return () => {
-      // return new OptionalMatch(new Clause(...)); // TODO: this should fail
-      return new OptionalMatch(match);
-    };
+    return () => new OptionalMatch(match);
   }
 
   protected toAppend(): string {

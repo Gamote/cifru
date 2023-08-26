@@ -24,10 +24,8 @@ export class Match<PatternType extends Pattern> extends Clause<
    * TODO: Should we enforce it through the Element abstract class?
    */
   static factory() {
-    return <PatternType extends Pattern>(pattern: PatternType) => {
-      // return new Match(new Clause(...)); // TODO: this should fail
-      return new Match(pattern);
-    };
+    return <PatternType extends Pattern>(pattern: PatternType) =>
+      new Match(pattern);
   }
 
   protected toAppend(): string {

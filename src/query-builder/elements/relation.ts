@@ -36,10 +36,7 @@ export class Relation<
     return <Attributes extends RelationAttributes>(
       // Use `Exact` to not allow extra attributes TODO: add tests to check this
       attributes?: Exact<Attributes, RelationAttributes>,
-    ) => {
-      // return new Relation(new Match(this), attributes); // TODO: this should fail
-      return new Relation(priorElement, attributes);
-    };
+    ) => new Relation(priorElement, attributes);
   }
 
   protected toAppend(): string {

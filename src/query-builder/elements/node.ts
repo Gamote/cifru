@@ -23,10 +23,7 @@ export class Node<
     return <Attributes extends PatternAttributes>(
       // Use `Exact` to not allow extra attributes TODO: add tests to check this
       attributes?: Exact<Attributes, PatternAttributes>,
-    ) => {
-      // return new Node(new Match(this), attributes); // TODO: this should fail
-      return new Node(priorElement, attributes);
-    };
+    ) => new Node(priorElement, attributes);
   }
 
   protected toAppend(): string {
