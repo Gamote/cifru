@@ -26,7 +26,7 @@ export class Match<P extends Pattern> extends Clause<P['name']> {
     return new Match<P>(pattern);
   }
 
-  public toQuery(): string {
+  protected toQuery(): string {
     return `MATCH ${this.pattern.query()}`;
   }
 

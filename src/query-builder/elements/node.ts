@@ -31,7 +31,7 @@ export class Node<Name extends Optional<ValidPatternName>> extends Pattern<
     );
   }
 
-  public toQuery(): string {
+  protected toQuery(): string {
     const name = this.name ? this.name : '';
     const labels = this.labelList.length ? `:${this.labelList.join('|')}` : '';
 
