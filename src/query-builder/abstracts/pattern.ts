@@ -3,6 +3,7 @@ import { Element } from './element';
 import type { Alphabet, Exact, Optional } from '../type-utils';
 
 // TODO: find a better name for this type
+// TODO: we need to add more stuff here like "_" - check the docs
 export type ValidPatternName = `${
   | Uppercase<Alphabet>
   | Lowercase<Alphabet>}${string}`;
@@ -22,15 +23,40 @@ export type PatternAttributes<
 export abstract class Pattern<
   Attributes extends PatternAttributes = PatternAttributes,
 > extends Element {
+  public abstract readonly __type: string;
   public readonly attributes?: Attributes;
 
   protected constructor(
-    priorElement?: Element,
+    priorElement?: Pattern,
     // Use `Exact` to not allow extra attributes TODO: add tests to check this
     attributes?: Exact<Attributes, PatternAttributes>,
   ) {
     super(priorElement);
 
     this.attributes = attributes;
+  }
+
+  protected toAppend(): string {
+    const variable = this.attributes?.variable ?? '';
+    const labels = this.attributes?.labels?.length
+      ? `:${this.attributes.labels.join('|')}`
+      : '';
+
+    const space = variable || labels ? ' ' : '';
+
+    // TODO: we should move this in a mini class utility to deal with
+    //  complex properties and to offer an easy way to clone the object
+    const proprieties = this.attributes?.properties
+      ? `${space}{${Object.entries(this.attributes.properties)
+          .map(([key, value]) => {
+            const valueString =
+              typeof value === 'string' ? `'${value}'` : String(value);
+
+            return `${key}: ${valueString}`;
+          })
+          .join(', ')}}`
+      : '';
+
+    return `${variable}${labels}${proprieties}`;
   }
 }

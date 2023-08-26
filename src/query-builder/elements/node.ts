@@ -1,5 +1,7 @@
 import { Pattern } from '../abstracts/pattern';
 
+import { Relation } from './relation';
+
 import type { PatternAttributes } from '../abstracts/pattern';
 import type { Exact } from '../type-utils';
 
@@ -9,39 +11,33 @@ import type { Exact } from '../type-utils';
 export class Node<
   Attributes extends PatternAttributes,
 > extends Pattern<Attributes> {
+  public readonly __type = Node.name;
+
   /**
-   * Type-safe way to create an instance.
-   *
+   * Generates a type-safe method to create an instance.
    * TODO: Should we enforce it through the Element abstract class?
    *
-   * @param attributes
+   * @param priorElement
    */
-  static create<Attributes extends PatternAttributes>(
-    // Use `Exact` to not allow extra attributes TODO: add tests to check this
-    attributes?: Exact<Attributes, PatternAttributes>,
-  ) {
-    return new Node(undefined, attributes);
+  static factory(priorElement?: Pattern) {
+    return <Attributes extends PatternAttributes>(
+      // Use `Exact` to not allow extra attributes TODO: add tests to check this
+      attributes?: Exact<Attributes, PatternAttributes>,
+    ) => {
+      // return new Node(new Match(this), attributes); // TODO: this should fail
+      return new Node(priorElement, attributes);
+    };
   }
 
   protected toAppend(): string {
-    const variable = this.attributes?.variable ?? '';
-    const labels = this.attributes?.labels?.length
-      ? `:${this.attributes.labels.join('|')}`
-      : '';
+    // Show the relation as undirected if the prior element is a node (e.g. (n)--(m))
+    const undirectedRelation =
+      this.priorElement?.__type === Node.name ? '--' : '';
 
-    // TODO: we should move this in a mini class utility to deal with
-    //  complex properties and to offer an easy way to clone the object
-    const proprieties = this.attributes?.properties
-      ? ` {${Object.entries(this.attributes.properties)
-          .map(([key, value]) => {
-            const valueString =
-              typeof value === 'string' ? `'${value}'` : String(value);
-
-            return `${key}: ${valueString}`;
-          })
-          .join(', ')}}`
-      : '';
-
-    return `(${variable}${labels}${proprieties})`;
+    return `${undirectedRelation}(${super.toAppend()})`;
   }
+
+  public node = Node.factory(this);
+
+  public relation = Relation.factory(this);
 }
