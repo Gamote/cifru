@@ -12,7 +12,7 @@ export class Return<ReturnProps extends string> extends Element {
     super(priorElement);
   }
 
-  protected toQuery(): string {
+  protected toAppend(): string {
     return ` RETURN ${this.props}`;
   }
 }

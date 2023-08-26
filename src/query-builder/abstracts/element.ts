@@ -16,17 +16,14 @@ export abstract class Element {
    */
   public query(): string {
     const priorQuery = this.priorElement?.query() ?? '';
-    return priorQuery + this.toQuery();
+    return priorQuery + this.toAppend();
   }
 
   /**
-   * Returns **ONLY** the cypher of the element is called on.
-   *
+   * Returns **ONLY** the cypher query of the element is called on.
    * If you want the full query, use `query()` instead.
-   *
-   * TODO: Find a better name for this method to differentiate it from `query()`
    */
-  protected abstract toQuery(): string;
+  protected abstract toAppend(): string;
 }
 
 /**
