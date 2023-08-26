@@ -19,6 +19,6 @@ export class OptionalMatch<P extends Pattern> extends Clause<P['name']> {
   }
 
   public toQuery(): string {
-    return `OPTIONAL ${this.match.toQuery()}`;
+    return `OPTIONAL ${this.match.query()}`;
   }
 }

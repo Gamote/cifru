@@ -25,7 +25,7 @@ export abstract class Element {
    * If you want the full query, use `query()` instead.
    *
    * TODO: Should not be public! The user might confuse it with `query()`.
-   *  I've done it myself. 🤦
+   *  I've done it myself, twice! 🤦
    */
   public abstract toQuery(): string;
 }

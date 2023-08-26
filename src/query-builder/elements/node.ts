@@ -11,7 +11,7 @@ export class Node<Name extends Optional<ValidPatternName>> extends Pattern<
   Name
 > {
   /**
-   * Type-safe way to create a `Node` instance.
+   * Type-safe way to create an instance.
    *
    * TODO: Should we enforce it through the Element abstract class?
    *
