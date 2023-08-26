@@ -13,9 +13,7 @@
 // TODO: make all elements, in a way, self contained, so they can be used by consumers if they want to use individual parts without the query builder
 //  one step is to detect if the prior element is defined and if not remove any trailing spaces or dashes that will affect the output (see `Return`)
 
-import { Direction } from './query-builder/elements/relation';
-
-import c from './index';
+import c, { Direction } from './index';
 
 const dev = () => {
   console.log('==================================');

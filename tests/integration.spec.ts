@@ -1,6 +1,6 @@
 import { it, describe, expect } from 'vitest';
 
-import c from '../src';
+import c, { Direction } from '../src';
 
 describe('Integration tests', () => {
   it('MATCH ()', () => {
@@ -93,5 +93,47 @@ describe('Integration tests', () => {
         .return('u')
         .query(),
     ).toBe(`MATCH (u:User {name: 'John', isActive: true, age: 30}) RETURN u`);
+  });
+
+  it(`MATCH (u:User)--(m) RETURN m`, () => {
+    expect(
+      c
+        .match(
+          c
+            .node({
+              variable: 'u',
+              labels: ['User'],
+            })
+            .node({
+              variable: 'm',
+            }),
+        )
+        .return('m')
+        .query(),
+    ).toBe(`MATCH (u:User)--(m) RETURN m`);
+  });
+
+  it(`MATCH (u:User)-[r:Role]->(m:Movie) RETURN r`, () => {
+    expect(
+      c
+        .match(
+          c
+            .node({
+              variable: 'u',
+              labels: ['User'],
+            })
+            .relation({
+              direction: Direction.Outgoing,
+              variable: 'r',
+              labels: ['Role'],
+            })
+            .node({
+              variable: 'm',
+              labels: ['Movie'],
+            }),
+        )
+        .return('r')
+        .query(),
+    ).toBe(`MATCH (u:User)-[r:Role]->(m:Movie) RETURN r`);
   });
 });
