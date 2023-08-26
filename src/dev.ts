@@ -12,6 +12,7 @@
 //  wrap them in an object and then use the `Exact` type to enforce the attributes - another win with the Exact 😱
 // TODO: make all elements, in a way, self contained, so they can be used by consumers if they want to use individual parts without the query builder
 //  one step is to detect if the prior element is defined and if not remove any trailing spaces or dashes that will affect the output (see `Return`)
+// TODO: add input validation for the attributes, e.g. `labels` should be an array of strings, `properties` should be an object with string keys and string values, etc
 
 import c, { Direction } from './index';
 
@@ -35,7 +36,7 @@ const dev = () => {
           direction: Direction.Outgoing,
           variable: 'r',
           labels: ['ACTED_IN'],
-          properties: { roles: ['Trinity'] },
+          // properties: { roles: ['Trinity'] },
           // where: { roles: ['Trinity'] },
         })
         .node({
@@ -50,13 +51,8 @@ const dev = () => {
     // .where({ u: { isActive: true } })
     .return('a') // TODO: for free strings we should introduce the `raw` function, so we can do `return(raw('anything'))`
     .query();
-  // => MATCH (u:Actor {name: 'Cami'} WHERE u.deletedAt IS NULL)-[:ACTED_IN {roles: ['Trinity']}]-(m:Movie {year: 1999} WHERE m.deletedAt IS NULL)
-  //    WHERE u.isActive=true
-  //    RETURN u
 
   console.log(query);
-
-  c.node();
 };
 
 void dev();
