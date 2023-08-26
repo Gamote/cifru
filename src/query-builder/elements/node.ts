@@ -9,7 +9,7 @@ import type { Exact } from '../type-utils';
  * Node
  */
 export class Node<
-  Attributes extends PatternAttributes,
+  Attributes extends PatternAttributes = PatternAttributes,
 > extends Pattern<Attributes> {
   public readonly __type = Node.name;
 

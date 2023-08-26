@@ -5,7 +5,6 @@
 // TODO: create an error library that we can use to throw errors with custom codes and messages that are Google friendly
 // TODO: no duplicated Node names, or return statements and stuff like that
 // TODO: match should accept an array
-// TODO: match should accept only nodes, so you can have relations but it should always be between nodes
 // TODO: you should not be able to reuse a variable name in the same query or before WITH check docs
 // TODO: can we maybe add a `public readonly attributes?: Attributes;` in the Element class? so that each element can have its own attributes?
 //  this way maybe we don't have to override the constructor in each class as we do now solely for the attributes maybe this way
