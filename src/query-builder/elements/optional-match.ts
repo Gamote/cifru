@@ -14,10 +14,6 @@ export class OptionalMatch<P extends Pattern> extends Clause<P['attributes']> {
     super();
   }
 
-  public clone(): OptionalMatch<P> {
-    return new OptionalMatch<P>(this.match);
-  }
-
   protected toAppend(): string {
     return `OPTIONAL ${this.match.query()}`;
   }
