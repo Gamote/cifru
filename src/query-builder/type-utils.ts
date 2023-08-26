@@ -27,3 +27,7 @@ export type Alphabet =
   | 'Z';
 
 export type Optional<T> = T | undefined;
+
+export type Exact<Input, Output> = {
+  [Key in keyof Input]: Key extends keyof Output ? Input[Key] : never;
+};

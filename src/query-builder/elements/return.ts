@@ -3,16 +3,16 @@ import { Element } from '../abstracts/element';
 /**
  * Return
  */
-export class Return<ReturnProps extends string> extends Element {
+export class Return<Variable extends string | number> extends Element {
   // TODO: We should accept only a type that is "Returnable"
   public constructor(
     priorElement: Element,
-    private readonly props: ReturnProps,
+    private readonly variable: Variable,
   ) {
     super(priorElement);
   }
 
   protected toAppend(): string {
-    return ` RETURN ${this.props}`;
+    return ` RETURN ${this.variable}`;
   }
 }

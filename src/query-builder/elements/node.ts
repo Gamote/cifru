@@ -1,44 +1,38 @@
 import { Pattern } from '../abstracts/pattern';
 
-import type { ValidPatternName } from '../abstracts/pattern';
-import type { Optional } from '../type-utils';
+import type { PatternAttributes } from '../abstracts/pattern';
+import type { Exact } from '../type-utils';
 
 /**
  * Node
  */
-export class Node<Name extends Optional<ValidPatternName>> extends Pattern<
-  Node<Name>,
-  Name
-> {
+export class Node<
+  Attributes extends PatternAttributes,
+> extends Pattern<Attributes> {
   /**
    * Type-safe way to create an instance.
    *
    * TODO: Should we enforce it through the Element abstract class?
    *
-   * @param name
+   * @param attributes
    */
-  static create<Name extends Optional<ValidPatternName>>(name?: Name) {
-    return new Node<Name>(undefined, name);
-  }
-
-  public clone() {
-    return new Node(
-      this.priorElement,
-      this.name,
-      [...this.labelList],
-      // TODO: we should clone this too
-      this.properties ? { ...this.properties } : undefined,
-    );
+  static create<Attributes extends PatternAttributes>(
+    // Use `Exact` to not allow extra attributes TODO: add tests to check this
+    attributes?: Exact<Attributes, PatternAttributes>,
+  ) {
+    return new Node(undefined, attributes);
   }
 
   protected toAppend(): string {
-    const name = this.name ? this.name : '';
-    const labels = this.labelList.length ? `:${this.labelList.join('|')}` : '';
+    const variable = this.attributes?.variable ?? '';
+    const labels = this.attributes?.labels?.length
+      ? `:${this.attributes.labels.join('|')}`
+      : '';
 
     // TODO: we should move this in a mini class utility to deal with
     //  complex properties and to offer an easy way to clone the object
-    const proprieties = this.properties
-      ? ` {${Object.entries(this.properties)
+    const proprieties = this.attributes?.properties
+      ? ` {${Object.entries(this.attributes.properties)
           .map(([key, value]) => {
             const valueString =
               typeof value === 'string' ? `'${value}'` : String(value);
@@ -48,6 +42,6 @@ export class Node<Name extends Optional<ValidPatternName>> extends Pattern<
           .join(', ')}}`
       : '';
 
-    return `(${name}${labels}${proprieties})`;
+    return `(${variable}${labels}${proprieties})`;
   }
 }

@@ -2,14 +2,13 @@ import { Return } from '../elements/return';
 
 import { Element } from './element';
 
-import type { ValidPatternName } from './pattern';
-import type { Optional } from '../type-utils';
+import type { PatternAttributes } from './pattern';
 
 /**
  * Clause
  */
 export abstract class Clause<
-  ReturnProps extends Optional<ValidPatternName>,
+  Attributes extends PatternAttributes | undefined,
 > extends Element {
   // A clause cannot have a prior element as most of the time
   // the clause is the first element in the query
@@ -17,9 +16,16 @@ export abstract class Clause<
     super();
   }
 
-  public return(
-    props: Exclude<ReturnProps, undefined>,
-  ): Return<Exclude<ReturnProps, undefined>> {
-    return new Return<Exclude<ReturnProps, undefined>>(this, props);
+  // TODO: this should be revisited
+  public return<
+    Returnable extends string | number = string,
+    Variable extends Returnable = Attributes extends PatternAttributes
+      ? Attributes['variable'] extends string
+        ? Attributes['variable']
+        : Returnable
+      : Returnable,
+    Iba extends Variable = Variable,
+  >(variable: Iba): Return<Variable> {
+    return new Return<Variable>(this, variable);
   }
 }
