@@ -25,34 +25,30 @@ const dev = () => {
       c
         .node({
           // left: '<', // should fail
-          variable: 'u2',
+          variable: 'a',
           labels: ['Actor'],
           properties: { name: 'Cami' },
           // where: { deletedAt: null },
         })
-        .node({
-          // left: '<', // should fail
-          variable: 'middle_man',
-        })
         .relation({
           // left: '<', // should fail
-          direction: Direction.Both,
+          direction: Direction.Outgoing,
           variable: 'r',
           labels: ['ACTED_IN'],
-          // properties: { roles: ['Trinity'] },
+          properties: { roles: ['Trinity'] },
           // where: { roles: ['Trinity'] },
         })
         .node({
           // left: '<', // should fail
           variable: 'm',
           labels: ['Movie'],
-          properties: { year: 1999 },
+          properties: { name: 'The Matrix' },
           // where: { deletedAt: null },
         }),
     )
     .optional()
     // .where({ u: { isActive: true } })
-    .return('u') // TODO: for free strings we should introduce the `raw` function, so we can do `return(raw('anything'))`
+    .return('a') // TODO: for free strings we should introduce the `raw` function, so we can do `return(raw('anything'))`
     .query();
   // => MATCH (u:Actor {name: 'Cami'} WHERE u.deletedAt IS NULL)-[:ACTED_IN {roles: ['Trinity']}]-(m:Movie {year: 1999} WHERE m.deletedAt IS NULL)
   //    WHERE u.isActive=true

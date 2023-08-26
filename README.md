@@ -16,15 +16,34 @@ yarn add cifru
 ## Usage
 
 ```ts
-import c from 'cifru';
+import c, { Direction } from 'cifru';
 
 const query = c
-  .match(c.node('u').labels('Actor', 'Musician').props({ name: 'Cami' }))
-  .return('u')
+  .match(
+    c
+      .node({
+        variable: 'a',
+        labels: ['Actor'],
+        properties: { name: 'Cami' },
+      })
+      .relation({
+        direction: Direction.Outgoing,
+        variable: 'r',
+        labels: ['ACTED_IN'],
+        properties: { roles: ['Trinity'] },
+      })
+      .node({
+        variable: 'm',
+        labels: ['Movie'],
+        properties: { name: 'The Matrix' },
+      }),
+  )
+  .return('a')
   .query();
 
 console.log(query);
-// => "MATCH (u:Actor|Musician {name: 'Cami'}) RETURN u"
+// => MATCH (a:Actor {name: 'Cami'})-[r:ACTED_IN {roles: Trinity}]->(m:Movie {name: 'The Matrix'})
+//    RETURN a
 ```
 
 ## Testing
