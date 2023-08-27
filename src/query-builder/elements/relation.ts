@@ -3,7 +3,7 @@ import { Pattern } from '../abstracts/pattern';
 import { Node } from './node';
 
 import type { PatternAttributes, ValidPatternName } from '../abstracts/pattern';
-import type { Optional, Exact } from '../type-utils';
+import type { Optional, ValidateShape } from '../type-utils';
 
 export enum Direction {
   Outgoing = '>',
@@ -35,7 +35,7 @@ export class Relation<
   static factory(priorElement?: Pattern) {
     return <Attributes extends RelationAttributes>(
       // Use `Exact` to not allow extra attributes TODO: add tests to check this
-      attributes?: Exact<Attributes, RelationAttributes>,
+      attributes?: ValidateShape<Attributes, RelationAttributes>,
     ) => new Relation(priorElement, attributes);
   }
 

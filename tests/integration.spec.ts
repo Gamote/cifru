@@ -11,6 +11,24 @@ describe('Integration tests', () => {
     expect(c.match(c.node()).optional().query()).toBe('OPTIONAL MATCH ()');
   });
 
+  it('OPTIONAL MATCH (a)--(b) RETURN a', () => {
+    expect(
+      c
+        .match(
+          c
+            .node({
+              variable: 'a',
+            })
+            .node({
+              variable: 'b',
+            }),
+        )
+        .optional()
+        .return('a')
+        .query(),
+    ).toBe('OPTIONAL MATCH (a)--(b) RETURN a');
+  });
+
   it('MATCH (u)', () => {
     expect(
       c
@@ -132,8 +150,8 @@ describe('Integration tests', () => {
               labels: ['Movie'],
             }),
         )
-        .return('r')
+        .return('m')
         .query(),
-    ).toBe(`MATCH (u:User)-[r:Role]->(m:Movie) RETURN r`);
+    ).toBe(`MATCH (u:User)-[r:Role]->(m:Movie) RETURN m`);
   });
 });

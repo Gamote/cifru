@@ -16,7 +16,7 @@ export abstract class Clause<
     super();
   }
 
-  // TODO: this should be revisited
+  // TODO: this should be revisited and we should use `Return.factory()` instead
   public return<
     Returnable extends string | number = string,
     Variable extends Returnable = Attributes extends PatternAttributes

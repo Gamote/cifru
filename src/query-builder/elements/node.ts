@@ -3,7 +3,7 @@ import { Pattern } from '../abstracts/pattern';
 import { Relation } from './relation';
 
 import type { PatternAttributes } from '../abstracts/pattern';
-import type { Exact } from '../type-utils';
+import type { ValidateShape } from '../type-utils';
 
 /**
  * Node
@@ -22,7 +22,7 @@ export class Node<
   static factory(priorElement?: Pattern) {
     return <Attributes extends PatternAttributes>(
       // Use `Exact` to not allow extra attributes TODO: add tests to check this
-      attributes?: Exact<Attributes, PatternAttributes>,
+      attributes?: ValidateShape<Attributes, PatternAttributes>,
     ) => new Node(priorElement, attributes);
   }
 

@@ -1,6 +1,6 @@
 import { Element } from './element';
 
-import type { Alphabet, Exact, Optional } from '../type-utils';
+import type { Alphabet, ValidateShape, Optional } from '../type-utils';
 
 // TODO: find a better name for this type
 // TODO: we need to add more stuff here like "_" - check the docs
@@ -29,7 +29,7 @@ export abstract class Pattern<
   protected constructor(
     priorElement?: Pattern,
     // Use `Exact` to not allow extra attributes TODO: add tests to check this
-    attributes?: Exact<Attributes, PatternAttributes>,
+    attributes?: ValidateShape<Attributes, PatternAttributes>,
   ) {
     super(priorElement);
 
