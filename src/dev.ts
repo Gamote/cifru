@@ -49,7 +49,7 @@ const dev = () => {
     )
     .optional()
     // .where({ u: { isActive: true } })
-    .return('a') // TODO: for free strings we should introduce the `raw` function, so we can do `return(raw('anything'))`
+    .return('error') // TODO: for free strings we should introduce the `raw` function, so we can do `return(raw('anything'))`
     .query();
 
   console.log(query);
