@@ -2,16 +2,20 @@ import { Pattern } from '../abstracts/pattern';
 
 import { Relation } from './relation';
 
-import type { PatternAttributes } from '../abstracts/pattern';
-import type { ValidateShape } from '../type-utils';
+import type { PatternAttributes, ValidPatternName } from '../abstracts/pattern';
+import type { ExactShape, Optional } from '../type-utils';
 
 /**
  * Node
  */
 export class Node<
-  Attributes extends PatternAttributes = PatternAttributes,
+  Attributes extends PatternAttributes,
 > extends Pattern<Attributes> {
   public readonly __type = Node.name;
+
+  constructor(priorElement?: Pattern, attributes?: Attributes) {
+    super(priorElement, attributes);
+  }
 
   /**
    * Generates a type-safe method to create an instance.
@@ -22,7 +26,7 @@ export class Node<
   static factory(priorElement?: Pattern) {
     return <Attributes extends PatternAttributes>(
       // Use `Exact` to not allow extra attributes TODO: add tests to check this
-      attributes?: ValidateShape<Attributes, PatternAttributes>,
+      attributes?: ExactShape<Attributes, PatternAttributes>,
     ) => new Node(priorElement, attributes);
   }
 

@@ -42,7 +42,7 @@ const query = c
   .query();
 
 console.log(query);
-// => MATCH (a:Actor {name: 'Cami'})-[r:ACTED_IN {roles: Trinity}]->(m:Movie {name: 'The Matrix'})
+// => MATCH (a:Actor {name: 'Cami'})-[r:ACTED_IN {roles: 'Trinity'}]->(m:Movie {name: 'The Matrix'})
 //    RETURN a
 ```
 

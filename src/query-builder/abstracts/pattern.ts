@@ -1,6 +1,8 @@
+import isObject from '../../utils/is-object';
+
 import { Element } from './element';
 
-import type { Alphabet, ValidateShape, Optional } from '../type-utils';
+import type { Alphabet, ExactShape, Optional } from '../type-utils';
 
 // TODO: find a better name for this type
 // TODO: we need to add more stuff here like "_" - check the docs
@@ -17,23 +19,40 @@ export type PatternAttributes<
   properties?: Record<string, string | number | boolean>;
 };
 
+type Default = {
+  variable: undefined;
+  labels: undefined;
+  properties: undefined;
+};
+
+type WithDefault<Input, Default> = Omit<Default, keyof Input> & Input;
+
 /**
  * Pattern
  */
-export abstract class Pattern<
-  Attributes extends PatternAttributes = PatternAttributes,
+export class Pattern<
+  Attributes extends PatternAttributes | undefined = undefined,
 > extends Element {
-  public abstract readonly __type: string;
-  public readonly attributes?: Attributes;
+  public readonly __type: string = Pattern.name;
+  public readonly attributes: Attributes extends PatternAttributes
+    ? WithDefault<Attributes, Default>
+    : Default;
 
-  protected constructor(
-    priorElement?: Pattern,
-    // Use `Exact` to not allow extra attributes TODO: add tests to check this
-    attributes?: ValidateShape<Attributes, PatternAttributes>,
+  constructor(
+    priorElement: Pattern | undefined,
+    attributes?: ExactShape<Attributes, PatternAttributes>,
   ) {
     super(priorElement);
 
-    this.attributes = attributes;
+    this.attributes = this.validate(attributes);
+  }
+
+  validate(
+    attributes?: ExactShape<Attributes, PatternAttributes>,
+  ): typeof this.attributes {
+    const validate = ()
+
+    return attributes;
   }
 
   protected toAppend(): string {
